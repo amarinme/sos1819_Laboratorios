@@ -238,4 +238,9 @@ app.delete("/api/v1/happiness-stats", (req, res) => {
     }
 );
 
+//SERVIDOR A LA ESCUCHA DE PETICIONES
+app.listen(port, () => 
+    { console.log("Server Ready and Listen in port", port);  
+}
+);
 
