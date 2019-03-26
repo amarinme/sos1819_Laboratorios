@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/amarinme/sos1819_Laboratorios#readme",
   "dependencies": {
-    "body-parser": "^1.18.3"
+    "body-parser": "^1.18.3",
+    "mongodb": "^3.2.2"
   }
 }

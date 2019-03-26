@@ -1,40 +1,35 @@
+//CREACION DEL SERVIDOR WEB
 var express = require("express");
 var app = express();
-var bodyParser = require("body-parser");
-
 const port = process.env.PORT || 8080;
+
+//BODY-PARSER PARA PODER USAR JSON
+var bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
+
+//CONECTARSE A LA BASE DE DATOS
+var happiness_stats;
+
 const MongoClient = require("mongodb").MongoClient;
-const uri = "mongodb+srv://test:test@sos-nwznc.mongodb.net/sos?retryWrites=true";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const uri_happiness_stats = "mongodb+srv://sos:sos@sos-d5gvg.mongodb.net/sos?retryWrites=true";
+const client_happiness_stats = new MongoClient(uri_happiness_stats, { useNewUrlParser: true });
 
-var happiness;
 
-/*
-
-client.connect(err => {
-  happiness = client.db("sos1819").collection("happiness");
-  console.log("Connected!");
+client_happiness_stats.connect(err => {
+    
+    if(err) console.log("Error:", err);
+    happiness_stats = client_happiness_stats.db("sos1819").collection("happiness-stats");
+    console.log("Connected!");
+  
 });
 
-*/
-app.get("/happiness",(req,res)=>{
+
+app.get("/",(req,res)=>{
    console.log("New request!");
    res.send("<html><body>Hi there!</body></html>");
 });
 
-app.use(bodyParser.json());
-
-app.get("/contacts", (req,res)=>{
-    
-    happiness.find({}).toArray((err,contactsArray)=>{
-        
-        if(err)
-            console.log("Error: "+err);
-        
-        res.send(contactsArray);        
-    });
-
-});
 
 
 /*
@@ -42,8 +37,13 @@ app.get("/contacts", (req,res)=>{
  |  API REST DE ANA  |
   ======================
 */
-//CREACIÓN DEL OBJETO "stat"
-var Stat = {
+//DOCUMENTACION /api/v1/happiness-stats/docs
+
+
+
+
+//CREACION DEL OBJETO "Stat_h"
+var Stat_h = {
     initStat: function(country, year, happinessScore, lowerLimitTrust, UpperLimitTrust) {
         this.country = country;
         this.year = year;
@@ -51,40 +51,67 @@ var Stat = {
         this.lowerLimitTrust = lowerLimitTrust;
         this.UpperLimitTrust = UpperLimitTrust;
     }
-}
+};
 
-var stats = [];
 
-//GET /api/v1/suicide-rates/loadInitialData
+//GET /api/v1/happiness-stats/loadInitialData
 app.get("/api/v1/happiness-stats/loadInitialData", (req, res) => {
     
-        var stat1 = Object.create(Stat);
-        var stat2 = Object.create(Stat);
-        var stat3 = Object.create(Stat);
-        var stat4 = Object.create(Stat);
+        var happinessStat1 = Object.create(Stat_h);
+        var happinessStat2 = Object.create(Stat_h);
+        var happinessStat3 = Object.create(Stat_h);
+        var happinessStat4 = Object.create(Stat_h);
+        var happinessStat5 = Object.create(Stat_h);
         
-        stat1.initStat("argelia", 2002, 5.7, 5.5, 5.8);
-        stat2.initStat("españa", 2008, 7.3, 7.2, 7.4);
-        stat3.initStat("arabia saudita", 2003, 7.3, 7.2, 7.4);
-        stat4.initStat("Ucrania", 2008, 6.1, 6, 6.2);
+        happinessStat1.initStat("argelia", 2002, 5.7, 5.5, 5.8);
+        happinessStat2.initStat("españa", 2008, 7.3, 7.2, 7.4);
+        happinessStat3.initStat("arabia saudita", 2003, 7.3, 7.2, 7.4);
+        happinessStat4.initStat("ucrania", 2008, 6.1, 6, 6.2);
+        happinessStat5.initStat("indonesia", 2006, 6.9, 6.8, 7.0);
         
-        stats.push(stat1);
-        stats.push(stat2);
-        stats.push(stat3);
-        stats.push(stat4);
+        happiness_stats.push(happinessStat1);
+        happiness_stats.push(happinessStat2);
+        happiness_stats.push(happinessStat3);
+        happiness_stats.push(happinessStat4);
+        happiness_stats.push(happinessStat5);
         
-        res.sendStatus(201);
-        res.send("<h1>Initial Data Succesfuly Loaded</h1>");
     
+    happiness_stats.find({}).toArray((err,hapinessArray)=>{
+        
+        if(err) console.log("Error: "+err);
+            
+        if(hapinessArray.length == 0){
+            happiness_stats.insert(happinessStat1);
+            happiness_stats.insert(happinessStat2);
+            happiness_stats.insert(happinessStat3);
+            happiness_stats.insert(happinessStat4);
+            happiness_stats.insert(happinessStat5);
+            console.log("Created new resources in database");
+            res.sendStatus(201);
+        }
+        else{
+            console.log("FATAL ERROR !!: Data Base is not empty.");
+            res.sendStatus(409);
+        }
+               
+    });
     }
 );
 
 
-//GET /api/v1/happiness.stats 
+//GET /api/v1/happiness-stats 
 app.get("/api/v1/happiness-stats", (req, res) => {
     
-        res.send(stats);
-    
+    happiness_stats.find({}).toArray((err,hapinessArray)=>{
+        
+        if(err) console.log("Error: "+err);
+            
+        else{
+            console.log("sending resources from database");
+        }
+            res.sendStatus(409);
+        }
+        );
     }
     
 );
@@ -93,60 +120,69 @@ app.get("/api/v1/happiness-stats", (req, res) => {
 app.post("/api/v1/happiness-stats", (req, res) => {
         
         var newStat = req.body;
-        stats.push(newStat);
         
-        res.sendStatus(201);
-        res.send("<h1>Resource created successfully.</h1>");
-        
+        happiness_stats.find(newStat).toArray((err, hapinessArray) =>{
+            
+            if(err) console.log("Error: "+err);
+            
+            if(hapinessArray.length == 0){
+                
+                happiness_stats.insert(newStat);
+                console.log("Created new resources in database");
+                res.sendStatus(201);
+                
+            }
+            else{
+                console.log("FATAL ERROR !!: Resource already exists in the database");
+                res.sendStatus(409);
+            }
+        });
     }
 );
 
-//GET /api/v1/suicide-rates/--reurso-- (DEVUELVE UN RECURSO CONCRETO)
+//GET /api/v1/happiness-stats/--recurso-- (DEVUELVE UN RECURSO CONCRETO)
 app.get("/api/v1/happiness-stats/:country", (req, res) => {
         
         var country = req.params.country;
         
-        var filteredStats = stats.filter( (s) => { return s.country == country; } );
-        
-        if(filteredStats.length >= 1){
+         happiness_stats.find({"country":country}).toArray((err, hapinessArray) =>{
             
-            res.sendStatus(200);
-            res.send(filteredStats);
+            if(err) console.log("Error: "+err);
             
-        } else {
-            
-            res.sendStatus(404);
-            res.send("<h1>ERROR: Resource not Found.</h1>");
-            
-        }
-        
+            if(hapinessArray.length > 0){
+                console.log("Request accepted, sending resource from database");
+                res.send(hapinessArray);
+            }else{
+                console.log("Request accepted, removing resource of database.");
+                    res.sendStatus(404);
+            }
     }
 );
 
         
-        //DELETE /api/v1/happiness-stats/--reurso-- (BORRA UN RECURSO CONCRETO)
+//DELETE /api/v1/happiness-stats/--recurso-- (BORRA UN RECURSO CONCRETO)
 app.delete("/api/v1/happiness-stats/:country", (req, res) => {
         
         var country = req.params.country;
         var found = false;
         
-        var updatedStats = stats.filter( (s) => { 
+        happiness_stats.find({"country":country}).toArray((err, hapinessArray) =>{
             
-                if(s.country == country) found = true;
-                return s.country != country 
+            if(err) console.log("Error: "+err);
             
-            } 
+            if(hapinessArray.length > 0){
+                happiness_stats.remove(hapinessArray[0]);
+                console.log("Request accepted, sending resource from database");
+                res.sendStatus(200);
+            }
+            else{
+                console.log("FATAL ERROR !!: Resource not found in database.");
+                    res.sendStatus(404);
+            }
+            
+            }
         );
-        
-        if(found){
-            stats = updatedStats;
-            res.sendStatus(200);
-            res.send("<h1>Resource successfully deleted.</h1>");
-        } else {
-            res.sendStatus(404);
-            res.send("<h1>ERROR: Resource not Found.</h1>");
-        }
-        
+ 
     }
 );
 
@@ -155,62 +191,50 @@ app.put("/api/v1/happiness-stats/:country", (req, res) => {
         
         var country = req.params.country;
         var updatedStat = req.body;
-        var found = false;
         
-        var updatedStats = stats.map( (s) => {
+        happiness_stats.find({"country":country}).toArray((err, hapinessArray) =>{
             
-                if(s.country == country){
-                    found = true;
-                    return updatedStat;
-                } else {
-                    return s;
+            if(err) console.log("Error: "+err);
+            
+            if(hapinessArray.length > 0){
+                happiness_stats.update({"country":country}, updatedStat);
+                console.log("Request accepted, sending resource from database");
+                res.sendStatus(200);
+            }
+            else{
+                console.log("FATAL ERROR !!: Resource not found in database.");
+                    res.sendStatus(404);
                 }
-            
             }
         );
-        
-        if(found){
-            stats = updatedStats;
-            res.sendStatus(200);
-            res.send("<h1>Resource successfully updated.</h1>");
-        } else {
-            res.sendStatus(404);
-            res.send("<h1>ERROR: Resource not Found.</h1>");
-        }
-        
     }
 );
 
-//POST /api/v1/happiness-stats/--reurso-- (ERROR METODO NO PERMITIDO)
+//POST /api/v1/happiness-stats/--recurso-- (ERROR METODO NO PERMITIDO)
 app.post("/api/v1/happiness-stats/:country", (req, res) => {
         
+        console.log("FATAL ERROR !!: Method not Allowed.");
         res.sendStatus(405);
-        res.send("<h1>ERROR. Method 'post' not Allowed on a Particular Resource.</h1>")
-        
     }
 );
 
 //PUT /api/v1/happiness-stats (ERROR METODO NO PERMITIDO)
 app.put("/api/v1/happiness-stats", (req, res) => {
         
+        console.log("FATAL ERROR !!: Method not Allowed.");
         res.sendStatus(405);
-        res.send("<h1>ERROR. Method 'put' not Allowed on Base Route.</h1>")
-        
     }
 );
 
 //DELETE /api/v1/happiness-stats (BORRA TODOS LOS RECURSOS)
 app.delete("/api/v1/happiness-stats", (req, res) => {
         
-        stats = [];
-        res.sendStatus(200);
-        res.send("<h1>All resources successfully deleted.</h1>");
-
-        
+        happiness_stats.remove({});
+        console.log("FATAL ERROR !!: Method not Allowed.");
+        res.sendStatus(405);
     }
 );
-     
- //SERVIDOR A LA ESCUCHA DE PETICIONES
+
 app.listen(port, () => 
     { console.log("Server Ready and Listen in port", port);  
 }
