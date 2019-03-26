@@ -156,6 +156,9 @@ app.get("/api/v1/happiness-stats/:country", (req, res) => {
                 console.log("Request accepted, removing resource of database.");
                     res.sendStatus(404);
             }
+            }
+        );
+        
     }
 );
 
@@ -235,7 +238,4 @@ app.delete("/api/v1/happiness-stats", (req, res) => {
     }
 );
 
-app.listen(port, () => 
-    { console.log("Server Ready and Listen in port", port);  
-}
-);
+
