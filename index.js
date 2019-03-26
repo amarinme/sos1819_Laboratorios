@@ -93,8 +93,8 @@ app.get("/api/v1/happiness-stats/loadInitialData", (req, res) => {
             console.log("FATAL ERROR !!: Data Base is not empty.");
             res.sendStatus(409);
         }
-               
-    });
+             }
+        );
     }
 );
 
@@ -104,7 +104,7 @@ app.get("/api/v1/happiness-stats", (req, res) => {
     
     happiness_stats.find({}).toArray((err,hapinessArray)=>{
         
-        if(err) console.log("Error: "+err);
+        if(err) console.log("Error: ", err);
             
         else{
             console.log("sending resources from database");
@@ -123,12 +123,12 @@ app.post("/api/v1/happiness-stats", (req, res) => {
         
         happiness_stats.find(newStat).toArray((err, hapinessArray) =>{
             
-            if(err) console.log("Error: "+err);
+            if(err) console.log("Error: ",err);
             
             if(hapinessArray.length == 0){
                 
                 happiness_stats.insert(newStat);
-                console.log("Created new resources in database");
+                console.log("Request accepted, creating new resource in database");
                 res.sendStatus(201);
                 
             }
@@ -147,11 +147,12 @@ app.get("/api/v1/happiness-stats/:country", (req, res) => {
         
          happiness_stats.find({"country":country}).toArray((err, hapinessArray) =>{
             
-            if(err) console.log("Error: "+err);
+            if(err) console.log("Error: ", err);
             
             if(hapinessArray.length > 0){
                 console.log("Request accepted, sending resource from database");
                 res.send(hapinessArray);
+                
             }else{
                 console.log("Request accepted, removing resource of database.");
                     res.sendStatus(404);
@@ -180,7 +181,7 @@ app.delete("/api/v1/happiness-stats/:country", (req, res) => {
             }
             else{
                 console.log("FATAL ERROR !!: Resource not found in database.");
-                    res.sendStatus(404);
+                res.sendStatus(404);
             }
             
             }
@@ -197,7 +198,7 @@ app.put("/api/v1/happiness-stats/:country", (req, res) => {
         
         happiness_stats.find({"country":country}).toArray((err, hapinessArray) =>{
             
-            if(err) console.log("Error: "+err);
+            if(err) console.log("Error: ", err);
             
             if(hapinessArray.length > 0){
                 happiness_stats.update({"country":country}, updatedStat);
