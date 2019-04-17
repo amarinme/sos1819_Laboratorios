@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Repositorio para las practicas de la asignatura sos",
   "main": "index.js",
+  "scripts": {
+     "test": "newman run https://www.getpostman.com/collections/7a9765362e33a9083016",
+  }
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
