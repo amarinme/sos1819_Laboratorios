@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="HappinessApp">
+    <head>
+        <title>Happiness APP</title>
+        <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+        <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="happiness_stats_frontend.js"></script>
+        <script type="text/javascript" src="main-ctrl.js"></script>
+    </head>
+    <body ng-controller="MainCtrl">
+        <h1>happiness stats</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Pais</th>
+                    <th>Año</th>
+                    <th>Rango de felicidad</th>
+                    <th>Limite inferior de confianza</th>
+                    <th>Limite superior de confianza</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat= "happiness_stat in happiness_stats">
+                    <td>{{ happiness-stat.country }}</td>
+                    <td>{{ happiness-stat.year }}</td>
+                    <td>{{ happiness-stat.happinessScore }}</td>
+                    <td>{{ happiness-stat.lowerLimitTrust }}</td>
+                    <td>{{ happiness-stat.upperLimitTrust }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <class = "form-control"></class>
+                        <input value="country" ng-model="newCountry.country" value="new country"/>
+                        
+                    </td>
+                    <td>
+                        <class = "form-control"></class>
+                        <input value="year" ng-model="newYear.year" value="new year"/>
+                    </td>
+                    <td>
+                        <class = "form-control"></class>
+                        <input value="happinessScore" ng-model="newHappinessScore.happinessScore" value="new happinessScore"/>
+                    </td>
+                    <td>
+                        <class = "form-control"></class>
+                        <input value="lowerLimitTrust" ng-model="newLowerLimitTrust.lowerLimitTrust" value="new lowerLimitTrust"/>
+                    </td>
+                    <td>
+                        <class = "form-control"></class>
+                        <input value="upperLimitTrust" ng-model="newUpperLimitTrust.upperLimitTrust" value="new upperLimitTrust"/>
+                    </td>
+                    <td>
+                        <buttom class="btn btn-primary" ng-click="addHappiness()">Añadir</buttom>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

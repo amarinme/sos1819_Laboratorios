@@ -1,59 +1,192 @@
 <!DOCTYPE html>
-<html ng-app="HappinessApp">
+<html>
+    
     <head>
-        <title>Happiness APP</title>
-        <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
-        <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
-        <script type="text/javascript" src="happiness-app.js"></script>
-        <script type="text/javascript" src="main-ctrl.js"></script>
+        <meta charset="utf-8">
+        <title>INDEX HTML</title>
     </head>
-    <body ng-controller="MainCtrl">
-        <h1>happiness stats</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Pais</th>
-                    <th>Año</th>
-                    <th>Rango de felicidad</th>
-                    <th>Limite inferior de confianza</th>
-                    <th>Limite superior de confianza</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat= "happiness-stat in happiness">
-                    <td>{{ happiness-stat.country }}</td>
-                    <td>{{ happiness-stat.year }}</td>
-                    <td>{{ happiness-stat.happinessScore }}</td>
-                    <td>{{ happiness-stat.lowerLimitTrust }}</td>
-                    <td>{{ happiness-stat.upperLimitTrust }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="country" ng-model="newCountry.country" value="new country"/>
-                        
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="year" ng-model="newYear.year" value="new year"/>
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="happinessScore" ng-model="newHappinessScore.happinessScore" value="new happinessScore"/>
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="lowerLimitTrust" ng-model="newLowerLimitTrust.lowerLimitTrust" value="new lowerLimitTrust"/>
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="upperLimitTrust" ng-model="newUpperLimitTrust.upperLimitTrust" value="new upperLimitTrust"/>
-                    </td>
-                    <td>
-                        <buttom class="btn btn-primary" ng-click="addHappiness()">Añadir</buttom>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </body>
+    
+    <body>
+        
+        <h1>SOS1819-04</h1>
+        
+        <h2>TEAM</h2>
+            
+            <ul>
+                <li> 
+                    <a
+                        href = "https://github.com/adrfergonsos"
+                        title = "Adrián Fernández González."
+                    > 
+                        Adrián Fernández González. 
+                    </a> 
+                </li>
+                
+                <li> 
+                    <a
+                        href = "https://github.com/amarinme"
+                        title = "Ana Marín Medina."
+                    > 
+                        Ana Marín Medina. 
+                    </a> 
+                </li>
+                
+                <li> 
+                    <a
+                        href = "https://github.com/juanpedroC"
+                        title = "Juan Pedro Carmona Castaño."
+                    > 
+                        Juan Pedro Carmona Castaño. 
+                    </a> 
+                </li>
+            </ul>
+            
+        <h2>Proyect Description:</h2>
+            <p>
+                Relationship between happiness, beer consumption and suicide rates. <br>
+                Is really beer a factor to be considered in happiness? <br>
+                Has one lower rate of suidicios a population with a higher happiness index?
+            </p>
+            
+        <h2>Repository:</h2>
+            <ul>
+                <li> 
+                    <a
+                        href = "https://github.com/gti-sos/SOS1819-04"
+                        title = "gti-sos/SOS1819-04."
+                    > 
+                       gti-sos/SOS1819-04. 
+                    </a> 
+                </li>
+            </ul>
+            
+        <h2>APIs:</h2>
+            <ul>
+                <li> 
+                    <a
+                        href = "https://sos1819-04.herokuapp.com/api/v1/suicide-rates/docs"
+                        title = "https://sos1819-04.herokuapp.com/api/v1/suicide-rates/docs"
+                    > 
+                        https://sos1819-04.herokuapp.com/api/v1/suicide-rates/docs.
+                    </a> 
+                        (developed by 
+                    <a
+                        href = "https://github.com/adrfergonsos"
+                        title = "Adrián Fernández González."
+                    > 
+                        Adrián Fernández González. 
+                    </a> 
+                        )
+                </li>
+                
+                <li> 
+                    <a
+                        href = "https://sos1819-04.herokuapp.com/api/v1/happiness-stats/docs"
+                        title = "https://sos1819-04.herokuapp.com/api/v1/happiness-stats/docs"
+                    > 
+                        https://sos1819-04.herokuapp.com/api/v1/happiness-stats/docs. 
+                    </a>
+                        (developed by 
+                    <a
+                        href = "https://github.com/amarinme"
+                        title = "Ana Marín Medina."
+                    > 
+                        Ana Marín Medina. 
+                    </a> 
+                        )
+                </li>
+                
+                <li> 
+                    <a
+                        href = "https://sos1819-04.herokuapp.com/api/v1/beer-consumed-stats/docs"
+                        title = "https://sos1819-04.herokuapp.com/api/v1/beer-consumed-stats/docs"
+                    > 
+                        https://sos1819-04.herokuapp.com/api/v1/beer-consumed-stats/docs. 
+                    </a> 
+                        (developed by 
+                    <a
+                        href = "https://github.com/juanpedroC"
+                        title = "Juan Pedro Carmona Castaño."
+                    > 
+                        Juan Pedro Carmona Castaño. 
+                    </a> 
+                        )
+                </li>
+            </ul>
+            
+        <h2>Mini POSTMANs:</h2>
+            <ul>
+                <li> 
+                    <a
+                        href = "https://sos1819-04.herokuapp.com/api/v1/suicide-rates/minipostman_ss"
+                        title = "https://sos1819-04.herokuapp.com/api/v1/suicide-rates/minipostman_ss"
+                    > 
+                        Mini Postman of Suicide-Rates's APP.
+                    </a> 
+                        (developed by 
+                    <a
+                        href = "https://github.com/adrfergonsos"
+                        title = "Adrián Fernández González."
+                    > 
+                        Adrián Fernández González. 
+                    </a> 
+                        )
+                </li>
+                <li> 
+                    <a
+                        href = "https://sos1819-04.herokuapp.com/api/v1/happiness-stats/minipostman_hs"
+                        title = "https://sos1819-04.herokuapp.com/api/v1/happiness-stats/minipostman_hs"
+                    > 
+                        MiniPostman of happiness stats APP.
+                    </a> 
+                        (developed by 
+                    <a
+                        href = "https://github.com/amarin"
+                        title = "Ana Marín Medina."
+                    > 
+                        Ana Marín Medina. 
+                    </a> 
+                        )
+                </li>
+                 <li> 
+                    <a
+                        href = "https://sos1819-04.herokuapp.com/api/v1/beer-consumed-stats/minipostman_bc"
+                        title = "https://sos1819-04.herokuapp.com/api/v1/beer-consumed-stats/minipostman_bc"
+                    > 
+                        MiniPostman of beer consumed stats APP.
+                    </a> 
+                        (developed by 
+                    <a
+                        href = "https://github.com/juanpedroC"
+                        title = "Juan Pedro Carmona Castaño."
+                    > 
+                        Juan Pedro Carmona Castaño. 
+                    </a> 
+                        )
+                </li>
+                
+            </ul>
+            
+        <h2>Mini POSTMANs:</h2>
+            <ul>
+                <li> 
+                    <a
+                        href = "https://sos1819-04.herokuapp.com/api/v1/suicide-rates/frontend_ss"
+                        title = "https://sos1819-04.herokuapp.com/api/v1/suicide-rates/frontend_ss"
+                    > 
+                        FrontEnd of Suicide-Rates's APP.
+                    </a>
+                        (developed by 
+                    <a
+                        href = "https://github.com/adrfergonsos"
+                        title = "Adrián Fernández González."
+                    > 
+                        Adrián Fernández González. 
+                    </a> 
+                        )
+                </li>
+            </ul>
+            
+    </body>            
+    
 </html>

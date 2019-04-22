@@ -12,7 +12,7 @@ angular
             $http.get("/api/v1/happiness-stats").then(function(response){
                 console.log("Data Received: " + JSON.stringify(response.data, null,2));
                 
-                $scope.happiness = response.data;
+                $scope.happiness_stats = response.data;
                 
                 });
                 $scope.addHappiness = function(){
