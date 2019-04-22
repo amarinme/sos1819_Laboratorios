@@ -21,12 +21,12 @@ angular
                 
             }
             
-            //A PARTIR DE AQUI PUEDES PONER LOS BOTONES Y DEMÁS
             $scope.addHappiness = function(){
                     var newHappiness = $scope.newHappiness;
                     console.log("Nuevo Ranking de felicidad");
                     $http.post(API ,newHappiness).then(function(response){
                         console.log("POST Response: "+ response.status +" "+ response.data);
+                        refresh();
                     }, function (error){
                         $scope.status = error.status;
                         $scope.data = "";
@@ -42,6 +42,37 @@ angular
                     $scope.data = "";
                     });
                 };
+
+            $scope.deleteAll = function() {
+                $http.delete(API).then(function(response) {
+                    console.log("Response : " + response.status + response.data);
+                    refresh();
+                }, function(error) {
+                    $scope.status = error.status;
+                    $scope.data = "";
+                });
+            };
+            
+            $scope.deleteOne = function(country, year) {
+                $http.delete(API +"/" +country + "/"+year).then(function(response) {
+                    console.log("Borrando: " + country + " - " + year);
+                    console.log("Response : " + response.status + response.data);
+                    refresh();
+                }, function(error) {
+                    $scope.status = error.status;
+                    $scope.data = "";
+                });
+            };
+            
+            $scope.loadInitialData = function() {
+                $http.get(API + "/loadInitialData").then(function(response) {
+                console.log("Respuesta : " + response.status + response.data);
+                refresh();
+            }).catch(function(response) {
+                $scope.status = response.status;
+                $scope.statusInfo = JSON.stringify(response.status, null, 2);
+                });
+            };
               
             
         }]);

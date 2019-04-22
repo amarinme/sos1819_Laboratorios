@@ -9,7 +9,12 @@
     </head>
     <body ng-controller="MainCtrl">
         <h1>happiness stats</h1>
+        <div style="padding-top:20px">
+            <label><h5 style="color: black">STATUS CODE:</h5></label>
+            <textarea class="form-control" ng-model="status" rows="1"></textarea>
+        </div>
         <table class="table">
+            <!-- CABECERAS -->
             <thead>
                 <tr>
                     <th>Pais</th>
@@ -19,6 +24,7 @@
                     <th>Limite superior de confianza</th>
                 </tr>
             </thead>
+            <!-- AÑADIR DATOS -->
             <tbody>
                 <tr ng-repeat= "happiness_stat in happiness_stats">
                     <td>{{ happiness_stat.country }}</td>
@@ -26,32 +32,26 @@
                     <td>{{ happiness_stat.happinessScore }}</td>
                     <td>{{ happiness_stat.lowerLimitTrust }}</td>
                     <td>{{ happiness_stat.upperLimitTrust }}</td>
+                    <td><button class="btn btn-outline-danger" 
+                        ng-click="deleteOne(happiness_stat.country,happiness_stat.year)">Borrar</button></td>
+                    
                 </tr>
+                
+                <!-- AÑADIR RECURSO -->
                 <tr>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="country" ng-model="newCountry.country" value="new country"/>
-                        
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="year" ng-model="newYear.year" value="new year"/>
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="happinessScore" ng-model="newHappinessScore.happinessScore" value="new happinessScore"/>
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="lowerLimitTrust" ng-model="newLowerLimitTrust.lowerLimitTrust" value="new lowerLimitTrust"/>
-                    </td>
-                    <td>
-                        <class = "form-control"></class>
-                        <input value="upperLimitTrust" ng-model="newUpperLimitTrust.upperLimitTrust" value="new upperLimitTrust"/>
-                    </td>
-                    <td>
-                        <buttom class="btn btn-primary" ng-click="addHappiness()">Añadir</buttom>
-                    </td>
+                    <td><input class = "form-control" ng-model="newHappiness.country" value="new country"/></td>
+                    <td><input class = "form-control" ng-model="newHappiness.year" value="new year"/></td>
+                    <td><input class = "form-control" ng-model="newHappiness.happinessScore" value="new happinessScore"/></td>
+                    <td><input class = "form-control" ng-model="newHappiness.lowerLimitTrust" value="new lowerLimitTrust"/></td>
+                    <td><input class = "form-control" ng-model="newHappiness.upperLimitTrust" value="new upperLimitTrust"/></td>
+                    <td><buttom class="btn btn-primary" ng-click="addHappiness()">Añadir</buttom></td>
+                </tr>
+                
+                
+                <!-- BOTON DE BORRAR TODO -->
+                <tr>
+                    <td><button class="btn btn-danger" ng-click="deleteAll()">BORRADO COMPLETO</button></td>
+                    <td><button class="btn btn-outline-success" ng-click="loadInitialData()">Restaurar</button></td>
                 </tr>
             </tbody>
         </table>

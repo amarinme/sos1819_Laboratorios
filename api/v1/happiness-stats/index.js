@@ -128,7 +128,7 @@ router.get("/", (req, res) => {
                 if (err) {
                     console.log("[happiness_stats] Error : ", err);
                 } else {
-                    console.log("[happiness_stats] Request accepted, sending resources from database.");
+                    console.log("[happiness_stats] Respuesta aceptada, enviando desde la base de datos.");
                 }
                 
                 res.send(happinessArray);
@@ -155,17 +155,17 @@ router.post("/", (req, res) => {
                 if(hapinessArray == 0){
                     
                     happiness_stats.insert(newStat);
-                    console.log("[happiness-stats] Created new resources in database");
+                    console.log("[happiness-stats] Creando recurso en la base de datos");
                     res.sendStatus(201);
                     
                 }
                 else{
-                    console.log("[happiness-stats] FATAL ERROR !!: Resource already exists in the database");
+                    console.log("[happiness-stats] FATAL ERROR !!: El recurso ya existe en la base de datos");
                     res.sendStatus(409);
                 }
             }
             else{
-                console.log("[happiness-stats] FATAL ERROR !!: Resource already exists in the database");
+                console.log("[happiness-stats] FATAL ERROR !!: El recurso ya existe en la base de datos");
                 res.sendStatus(400);
             }
         });
@@ -200,10 +200,10 @@ router.get("/:country/:year", (req, res) => {
             if(err) console.log("Error: ",err);
             
             if(happinessArray.length > 0){
-                console.log("[happiness-stats] Request accepted, sending resource from database");
+                console.log("[happiness-stats] Aceptado, enviando recurso desde la basde datos");
                 res.send(happinessArray[0]);
             }else{
-                console.log("[happiness_stats] Error, Resource not found in database");
+                console.log("[happiness_stats] Error, El recurso no se encuentra en la base de datos");
                     res.sendStatus(404);
             }
             }
@@ -226,11 +226,11 @@ router.delete("/:country/:year", (req, res) => {
             
             if(hapinessArray.length > 0){
                 happiness_stats.remove(hapinessArray[0]);
-                console.log("Request accepted, removing resource from database");
+                console.log("OK, eliminado recurso");
                 res.sendStatus(200);
             }
             else{
-                console.log("[happiness-stats] FATAL ERROR !!: Resource not found in database.");
+                console.log("[happiness-stats] FATAL ERROR !!: No se encuentra en la base de datos");
                     res.sendStatus(404);
             }
             
@@ -256,12 +256,12 @@ router.put("/:country/:year", (req, res) => {
                     if(happinessArray.length > 0){
                         
                         happiness_stats.update( {"country": country, "year":year}, updatedStat );
-                        console.log("[happiness_stats] Request accepted, updating resource of database.");
+                        console.log("[happiness_stats] OK, updating resource of database.");
                         res.sendStatus(200);
                         
                     } else {
                         
-                        console.log("[happiness_stats] FATAL ERROR : Resource not found in database.");
+                        console.log("[happiness_stats] ERROR : No se encuentra en la base de datos.");
                         res.sendStatus(404);
                         
                     }
@@ -271,7 +271,7 @@ router.put("/:country/:year", (req, res) => {
             
         } else {
             
-            console.log("[happiness_stats] FATAL ERROR : Resource addressed is not the same as resouced trying to modify.");
+            console.log("[happiness_stats] ERROR : la direccion del recurso no es la misma que la que se intenta modificar.");
             res.sendStatus(400);
             
         }
@@ -283,7 +283,7 @@ router.put("/:country/:year", (req, res) => {
 //POST /api/v1/happiness-stats/--recurso-- (ERROR METODO NO PERMITIDO)
 router.post("/api/v1/happiness-stats/:country", (req, res) => {
         
-        console.log("[happiness-stats] FATAL ERROR !!: Method not Allowed.");
+        console.log("[happiness-stats] ERROR !!: Metodo no permitido");
         res.sendStatus(405);
     }
 );
@@ -291,7 +291,7 @@ router.post("/api/v1/happiness-stats/:country", (req, res) => {
 //PUT /api/v1/happiness-stats (ERROR METODO NO PERMITIDO)
 router.put("/", (req, res) => {
         
-        console.log("[happiness-stats] FATAL ERROR !!: Method not Allowed.");
+        console.log("[happiness-stats] FATAL ERROR !!: Metodo no permitido");
         res.sendStatus(405);
     }
 );
@@ -300,7 +300,7 @@ router.put("/", (req, res) => {
 router.delete("/", (req, res) => {
         
         happiness_stats.remove({});
-        console.log("[happiness_stats] Request accepted, removing all resources of database.");
+        console.log("[happiness_stats] OK, Eliminando todos los recursos");
         res.sendStatus(200);
         
     }
