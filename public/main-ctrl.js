@@ -5,8 +5,7 @@ angular
         .controller("MainCtrl",["$scope","$http", function ($scope,$http){
             console.log("Main Controller initialized.");
             var API = "/api/v1/happiness-stats";
-            /*global refresh*/
-            refresh();
+       
             
             
             console.log("Requesting happiness to <"+API+">...");
