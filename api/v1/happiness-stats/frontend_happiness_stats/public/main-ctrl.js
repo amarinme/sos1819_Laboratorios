@@ -23,12 +23,22 @@ angular
             
             $scope.addHappiness = function(){
                     var newHappiness = $scope.newHappiness;
-                    console.log("Nuevo Ranking de felicidad");
+                    console.log("Nuevo Recurso de felicidad");
                     $http.post(API ,newHappiness).then(function(response){
                         console.log("POST Response: "+ response.status +" "+ response.data);
                         refresh();
+                        $scope.status = "Recurso creado";
                     }, function (error){
                         $scope.status = error.status;
+                        if($scope.status == 405){
+                            $scope.status = $scope.status + " - No se puede realizar la acción";
+                    }
+                        if($scope.status == 409){
+                            $scope.status = $scope.status + " - El recurso ya existe";
+                    }
+                        if($scope.status == 400){
+                            $scope.status = $scope.status + " - El recurso ya existe";
+                    }
                         $scope.data = "";
                         });
                 };
@@ -47,6 +57,7 @@ angular
                 $http.delete(API).then(function(response) {
                     console.log("Response : " + response.status + response.data);
                     refresh();
+                    $scope.status = "Recursos eliminados";
                 }, function(error) {
                     $scope.status = error.status;
                     $scope.data = "";
@@ -58,8 +69,12 @@ angular
                     console.log("Borrando: " + country + " - " + year);
                     console.log("Response : " + response.status + response.data);
                     refresh();
+                    $scope.status = country +"ha sido eliminado";
                 }, function(error) {
                     $scope.status = error.status;
+                    if($scope.status == 404){
+                        $scope.status = $scope.status + " - El recurso elegido no existe";
+                    }
                     $scope.data = "";
                 });
             };
@@ -67,11 +82,29 @@ angular
             $scope.loadInitialData = function() {
                 $http.get(API + "/loadInitialData").then(function(response) {
                 console.log("Respuesta : " + response.status + response.data);
+                $scope.status = "Restauracion realizada con exito";
                 refresh();
             }).catch(function(response) {
                 $scope.status = response.status;
+                if($scope.status == 409){
+                        $scope.status = $scope.status + " - La base de datos debe estar vacia, borre todo antes de restaurar";
+                }
                 $scope.statusInfo = JSON.stringify(response.status, null, 2);
                 });
+            };
+            
+            $scope.Busqueda = function() {
+                var search = "?";
+                if ($scope.searchForm.from) {
+                    search += ("&from=" + $scope.searchForm.from);
+                }
+                if ($scope.searchForm.to) {
+                    search += ("&to=" + $scope.searchForm.to);
+                }
+                console.log(search);
+                refresh();
+                
+                
             };
               
             
